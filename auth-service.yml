@@ -1,0 +1,31 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 10001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-eureka/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/
+    statusPageUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/actuator/info
+    healthCheckUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/actuator/health
+    homePageUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/
+    instance-id: auth-service
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+security:
+  jwt:
+    secret: ${RPM_JWT_SECRET}
