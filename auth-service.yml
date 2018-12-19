@@ -10,14 +10,14 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-eureka/eureka
+      defaultZone: http://localhost:8762/rpm-eureka/eureka
     register-with-eureka: true
     fetch-registry: true
   instance:
-    hostname: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/
-    statusPageUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/actuator/info
-    healthCheckUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/actuator/health
-    homePageUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth/
+    hostname: http://localhost:8762/rpm-auth/
+    statusPageUrl: http://localhost:8762/rpm-auth/actuator/info
+    healthCheckUrl: http://localhost:8762/rpm-auth/actuator/health
+    homePageUrl: http://localhost:8762/rpm-auth/
     instance-id: auth-service
     
 management:
