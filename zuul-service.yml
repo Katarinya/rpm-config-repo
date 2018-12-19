@@ -1,0 +1,52 @@
+server:
+  port: 8762
+  tomcat:
+    max-http-post-size: 2MB
+    max-swallow-size: 2MB
+  
+spring:  
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+      enabled: true
+
+ribbon:
+  ReadTimeout: 9999999
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-eureka/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul
+    statusPageUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul/actuator/info
+    healthCheckUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul/actuator/health
+    homePageUrl: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul
+    instance-id: zuul-service
+
+zuul:
+  ignored-services: '*'
+  routes:
+    auth-service:
+      path: /auth/**
+      url: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-auth
+      service-id: auth-service
+      strip-prefix: true
+      sensitive-headers: Cookie,Set-Cookie
+    project-service:
+      path: /projects/**
+      url: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-project
+      service-id: project-service
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        
+security:
+  jwt:
+    secret: ${RPM_JWT_SECRET}
